@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
-@CrossOrigin("*")
 public class AdminController {
     private final AdminService adminService;
 
@@ -25,5 +25,10 @@ public class AdminController {
         TaskDTO createdTaskDTO = adminService.createTask(taskDTO);
         if(createdTaskDTO == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTaskDTO);
+    }
+
+    @GetMapping("/tasks")
+    public ResponseEntity<?> getAllTasks() {
+        return ResponseEntity.ok(adminService.getAllTasks());
     }
 }
